@@ -57,4 +57,8 @@ func Reload(server *http.Server) {
 	return
 }
 
+
+http://localhost:8080/_reload
+http://localhost:8080/index/test/test
+
 ```
