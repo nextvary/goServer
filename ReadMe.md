@@ -37,11 +37,6 @@ func Reload(server *http.Server) {
 		if err := server.Shutdown(context.Background()); err != nil {
 			fmt.Println(err)
 		}
-		env := append(
-			os.Environ(),
-			"ENDLESS_CONTINUE=1",
-		)
-
 		indexFile := os.Getenv("indexFile")
 		cmd := exec.Command("go", "run", indexFile)
 		cmd.Stdout = os.Stdout
