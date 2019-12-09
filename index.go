@@ -2,6 +2,7 @@ package main
 
 import (
 	"./app"
+	"./controller/crontab"
 	"./controller/index"
 	mytest "./controller/test"
 	"fmt"
@@ -19,6 +20,7 @@ func registerRoute() {
 	app.Static["/assets"] = "./static"       //静态资源
 	app.AutoRouter(&index.IndexController{}) //路由注册 /index/index/index1
 	app.AutoRouter(&index.TestController{})
+	app.AutoRouter(&crontab.CronController{})
 	app.Router("test2/test", &mytest.Test1Controller{})
 }
 func main() {

@@ -1,5 +1,5 @@
-#go http server with reload
-####一、 简介
+# go http server with reload
+#### 一、 简介
 * 写完代码每次都要重新编译，开发阶段很是繁琐，本demo使用 /_reload 进行重启服务
 * 核心简述：使用channel阻塞主进程，然后监听 _reload chan 信号，调用exec 重启服务
 ```

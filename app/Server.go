@@ -53,7 +53,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		controllerT, ok = Mapping[controllerName[1]]
 		if !ok {
-			app := App{ctx, nil, -1, "route not found1"}
+			app := App{ctx, nil, -1, "controller not found1"}
 			//http.NotFound(w, r)
 			app.Response()
 			return
@@ -61,12 +61,22 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	refV := reflect.New(controllerT)
+
 	method := refV.MethodByName(methodName)
 	if !method.IsValid() {
 		//http.NotFound(w, r)
-		app := App{ctx, nil, -1, "route not found2"}
-		app.Response()
-		return
+		tempMethodName := ""
+		for i := 0; i < refV.Type().NumMethod(); i++ {
+			tempMethodName = refV.Type().Method(i).Name
+			if strings.ToLower(tempMethodName) == strings.ToLower(methodName) {
+				method = refV.Method(i)
+			}
+		}
+		if !method.IsValid() {
+			app := App{ctx, nil, -1, "action not found2"}
+			app.Response()
+			return
+		}
 	}
 
 	controller := refV.Interface().(IApp)
